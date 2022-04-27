@@ -1,4 +1,5 @@
 ﻿open OpenTK.Graphics.OpenGL
+open OpenTK.Windowing.Desktop
 open Options.Globals
 open System
 open System.Diagnostics
@@ -24,7 +25,9 @@ let cliArgs = ArgumentParser.Create<CliArguments>().ParseCommandLine()
 let initOpenTK () =
     // OpenTK requires a GameWindow
     if not (cliArgs.Contains(Skip_GLSL_Compile)) then
-        new OpenTK.GameWindow() |> ignore
+        let gameWindowSettings = GameWindowSettings.Default
+        let nativeWindowSettings = new NativeWindowSettings()
+        new GameWindow(gameWindowSettings, nativeWindowSettings) |> ignore
 
 // Return true if the file can be compiled as a GLSL shader.
 let canBeCompiled content =
